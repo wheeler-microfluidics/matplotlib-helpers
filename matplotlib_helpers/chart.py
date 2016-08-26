@@ -52,16 +52,22 @@ def groupif(df, key):
 
     key = pd.Series(key)
 
-    for key_i, df_i in df.groupby(key[~key.isnull()].tolist()):
-        if not isinstance(key_i, (list, tuple)):
-            key_i = [key_i]
-        full_key_i = pd.Series(object(), index=key.index)
-        full_key_i[key.isnull()] = 0
-        full_key_i[~key.isnull()] = key_i
+    if all([k is None for k in key]):
         if singleton_key:
-            yield full_key_i.values[0], df_i
+            yield 0, df
         else:
-            yield tuple(full_key_i.values), df_i
+            yield tuple([0] * key.size), df
+    else:
+        for key_i, df_i in df.groupby(key[~key.isnull()].tolist()):
+            if not isinstance(key_i, (list, tuple)):
+                key_i = [key_i]
+            full_key_i = pd.Series(object(), index=key.index)
+            full_key_i[key.isnull()] = 0
+            full_key_i[~key.isnull()] = key_i
+            if singleton_key:
+                yield full_key_i.values[0], df_i
+            else:
+                yield tuple(full_key_i.values), df_i
 
 
 def encode(df_data, **kwargs):
