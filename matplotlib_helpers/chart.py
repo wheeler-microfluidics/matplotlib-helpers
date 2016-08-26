@@ -171,16 +171,16 @@ def encode(df_data, **kwargs):
                                                   else values.row)])
 
     axis = axes.values()[0].values()[0]
-    colors = OrderedDict(zip(values.color, itertools.imap(lambda v: v['color'],
-                                                          axis._get_lines
-                                                          .prop_cycler)))
+    colors = OrderedDict(zip(values.color or [0],
+                             itertools.imap(lambda v: v['color'],
+                                            axis._get_lines.prop_cycler)))
     filled_markers = set(mpl.markers.MarkerStyle.filled_markers)
     nonfilled_markers = reversed(filter(lambda v: (v is not None) and (v !=
                                                                        'None')
                                         and (v not in filled_markers),
                                         mpl.markers.MarkerStyle.markers
                                         .keys()))
-    markers = OrderedDict(zip(values['shape'],
+    markers = OrderedDict(zip(values['shape'] or [0],
                               itertools.cycle(itertools
                                               .chain(mpl.markers.MarkerStyle
                                                      .filled_markers,
@@ -227,6 +227,8 @@ def encode(df_data, **kwargs):
                          if kwargs.get('stroke', True) else 'none',
                          markerfacecolor=colors[color_j]
                          if kwargs.get('fill', True) else 'none')
+        axis_ij.set_xlabel(kwargs['x'])
+        axis_ij.set_ylabel(kwargs['y'])
 
     sharexscale = kwargs.get('sharexscale', True)
     shareyscale = kwargs.get('shareyscale', True)
