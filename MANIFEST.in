@@ -1,0 +1,7 @@
+include RELEASE-VERSION
+include version.py
+include setup.py
+include paver-minilib.zip
+recursive-include matplotlib_helpers *
+recursive-exclude matplotlib_helpers *.pyc
+recursive-exclude matplotlib_helpers *~
