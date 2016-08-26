@@ -6,8 +6,6 @@
 Welcome to matplotlib-helpers's documentation!
 ==============================================
 
------------------
-
 Grid plot
 ---------
 
@@ -27,6 +25,8 @@ With :func:`matplotlib_helpers.chart.encode` **(quoted from the**
     -  The data is mapped to the **visual properties** (position, color,
        size, shape, faceting, etc.) using the group-by operation of
        Pandas.
+
+.. include:: README.rst
 
 See the :func:`matplotlib_helpers.chart.encode` documentation for more details.
 
