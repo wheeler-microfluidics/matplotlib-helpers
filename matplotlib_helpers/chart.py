@@ -93,16 +93,26 @@ def encode(df_data, **kwargs):
     style  : str, optional
         Label of column containing style categories. If ``None``, all data is
         plotted using the same line style.
-    sharexscale  : bool or 'column'
+    sharexscale  : bool or 'column', optional
         If ``True`` (default) all subplots share the same scale on the ``x``
         axis. If ``'column'`` all subplots *in the same column* share the same
         ``x`` axis.  If ``False``, the ``x`` axis of each subplot is scaled
         independently.
-    shareyscale  : bool or 'row'
+    shareyscale  : bool or 'row', optional
         If ``True`` (default) all subplots share the same scale on the ``y``
         axis. If ``'row'`` all subplots *in the same row* share the same ``y``
         axis.  If ``False``, the ``y`` axis of each subplot is scaled
         independently.
+    fill : bool, optional
+        Fill markers
+    stroke : bool, optional
+        Draw marker outlines
+    linestyle : str, optional
+        Line style to use for plot.
+
+        By default, if :data:`shape` is set, :data:`linestyle` is set to
+        ``"none"``.  If :data:`shape` is not set, :data:`linestyle` is set to
+        ``"--"`` by default.
 
     Returns
     -------
@@ -220,13 +230,21 @@ def encode(df_data, **kwargs):
                     regress_leaf = regress_color
                     regress_leaf[shape_j] = copy.deepcopy(model)
 
+            plot_kwargs = {'color': colors[color_j]}
+            if keys['shape'] is not None:
+                plot_kwargs['markeredgecolor'] = (colors[color_j]
+                                                  if kwargs.get('stroke', True)
+                                                  else 'none')
+                plot_kwargs['markerfacecolor'] = (colors[color_j]
+                                                  if kwargs.get('fill', True)
+                                                  else 'none')
+                plot_kwargs['marker'] = markers[shape_j]
+                plot_kwargs['linestyle'] = kwargs.get('linestyle', 'none')
+            else:
+                plot_kwargs['linestyle'] = kwargs.get('linestyle', '--')
             # Plot markers.
             axis_ij.plot(df_j[kwargs['x']].values, df_j[kwargs['y']].values,
-                         linestyle='none', marker=markers[shape_j],
-                         markeredgecolor=colors[color_j]
-                         if kwargs.get('stroke', True) else 'none',
-                         markerfacecolor=colors[color_j]
-                         if kwargs.get('fill', True) else 'none')
+                         **plot_kwargs)
         axis_ij.set_xlabel(kwargs['x'])
         axis_ij.set_ylabel(kwargs['y'])
 
