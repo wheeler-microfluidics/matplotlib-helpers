@@ -1,3 +1,4 @@
+![https://ci.appveyor.com/api/projects/status/github/wheeler-microfluidics/matplotlib-helpers?branch=master&svg=true](https://ci.appveyor.com/api/projects/status/github/wheeler-microfluidics/matplotlib-helpers?branch=master&svg=true)
 Usage
 -----
 
