@@ -44,7 +44,7 @@ The same type of handling can be applied using the `row` keyword.
                           cell_size=5, fill=False)
 ```
 
-![Fuel economy vs horsepower (columns by “Origin”)][column-plot]
+![Fuel economy vs horsepower (columns by "Origin")][column-plot]
 
 By default, all plots share the same `x` axis scale and `y` axis scale.  This
 behaviour can be changed by setting the `sharexscale` keyword argument or the
